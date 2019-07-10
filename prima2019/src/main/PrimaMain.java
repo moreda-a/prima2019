@@ -30,7 +30,7 @@ public class PrimaMain {
 				run(game, simulator, mcts);
 			}
 			break;
-		case "SPF": // working :D
+		case "COG": // working :D
 			game = new SPF_Game();
 			simulator = new SPF_Simulator();
 			mcts = new MonteCarloTreeSearch(game, simulator);
@@ -39,7 +39,7 @@ public class PrimaMain {
 				run(game, simulator, mcts);
 			}
 			break;
-		case "DCMAGAMCTS": // try to make it possible :D
+		case "PRIMA": // try to make it possible :D
 			game = new DCMAGA_Game();
 			simulator = new DCMAGA_Simulator();
 			mcts = new MonteCarloTreeSearch(game, simulator);

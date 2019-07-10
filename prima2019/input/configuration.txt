@@ -1,8 +1,8 @@
 false
 false
 false
-DCMAGAMCTS
-dcmagamcts\\testcase-6.txt
+PRIMA
+testcase-6.txt
 false
 false
 false

@@ -148,7 +148,7 @@ public class DCMAGA_State extends State {
 	}
 
 	public DCMAGA_State(String str, int mynum) {
-		File file = new File("testcase\\" + str);
+		File file = new File("input\\testcase\\prima\\" + str);
 		try {
 			Scanner sc;
 			if (PrimaMain.systemInput)
