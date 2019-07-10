@@ -1,8 +1,9 @@
 false
 false
 false
+true
 PRIMA
-testcase-6.txt
+testcase-4.txt
 false
 false
 false

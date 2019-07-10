@@ -5,7 +5,7 @@ import java.util.*;
 
 import main.*;
 
-public class DCMAGA_State extends State {
+public class PRIMA_State extends State {
 
 	boolean hashed;
 	int hash;
@@ -20,9 +20,9 @@ public class DCMAGA_State extends State {
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
-		if (obj.getClass() != DCMAGA_State.class)
+		if (obj.getClass() != PRIMA_State.class)
 			return false;
-		DCMAGA_State st = (DCMAGA_State) obj;
+		PRIMA_State st = (PRIMA_State) obj;
 
 		boolean res = nextColor == st.nextColor & (parent == null ? st.parent == null : parent.equals(st.parent));
 		for (int i = 0; i < width; ++i)
@@ -32,7 +32,7 @@ public class DCMAGA_State extends State {
 		return res;
 	}
 
-	public DCMAGA_Board board;
+	public PRIMA_Board board;
 	public int table[][];
 	// public int size;
 	public int height;
@@ -46,6 +46,8 @@ public class DCMAGA_State extends State {
 
 	public PII[] lastMove;
 	public PII[] target;
+
+	public int realDepth = 0;
 
 	class PII {
 		public PII(int i, int j) {
@@ -68,10 +70,11 @@ public class DCMAGA_State extends State {
 		lastColor = -1;
 	}
 
-	public DCMAGA_State(DCMAGA_State st, DCMAGA_Action act) {
+	public PRIMA_State(PRIMA_State st, PRIMA_Action act) {
 		width = st.width;
 		height = st.height;
 		playerNumber = st.playerNumber;
+		goalNumber = st.goalNumber;
 		table = new int[width][height];
 		lastMove = new PII[playerNumber + 1];
 		target = new PII[playerNumber + 1];
@@ -96,7 +99,118 @@ public class DCMAGA_State extends State {
 		myNumber = st.myNumber;
 
 		setNextColor();
-		depth = st.depth + 1;
+		if (nextColor <= lastColor)
+			depth = st.depth + 1;
+		else
+			depth = st.depth;
+		realDepth = st.realDepth;
+	}
+
+	public PRIMA_State(String str, int mynum) {
+		File file;
+		if (PrimaMain.unix)
+			file = new File("input/testcase/prima/" + str);
+		else
+			file = new File("input\\testcase\\prima\\" + str);
+		try {
+			Scanner sc;
+			if (PrimaMain.systemInput)
+				sc = new Scanner(System.in);
+			else
+				sc = new Scanner(file);
+			width = sc.nextInt();
+			height = sc.nextInt();
+			playerNumber = sc.nextInt();
+			goalNumber = sc.nextInt();
+			table = new int[width][height];
+			lastMove = new PII[playerNumber + 1];
+			target = new PII[playerNumber + 1];
+			for (int i = 1; i <= playerNumber; ++i) {
+				lastMove[i] = null;
+				target[i] = null;
+			}
+			for (int i = 0; i < width; ++i)
+				for (int j = 0; j < height; ++j) {
+					table[i][j] = sc.nextInt();
+					if (table[i][j] != 0 && table[i][j] != -1)
+						if (lastMove[table[i][j]] == null)
+							lastMove[table[i][j]] = new PII(i, j);
+					// else
+					// target[table[i][j]] = new PII(i, j);
+				}
+			lastColor = playerNumber;
+			setNextColor();
+			parent = null;
+			lastColor = -1;
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		nextColor = mynum;
+		myNumber = mynum;
+	}
+
+	public PRIMA_State(State[] agentState, State[] gg) {
+		PRIMA_State st = (PRIMA_State) agentState[1];
+		width = st.width;
+		height = st.height;
+		playerNumber = st.playerNumber;
+		goalNumber = st.goalNumber;
+		table = new int[width][height];
+		lastMove = new PII[playerNumber + 1];
+		target = new PII[playerNumber + 1];
+		for (int i = 1; i <= playerNumber; ++i) {
+			lastMove[i] = st.lastMove[i];
+			target[i] = st.target[i];
+		}
+		for (int i = 0; i < width; ++i)
+			for (int j = 0; j < height; ++j)
+				table[i][j] = st.table[i][j];
+		for (int i = 1; i <= playerNumber; ++i) {
+			int help = table[((PRIMA_State) gg[i]).lastMove[i].first][((PRIMA_State) gg[i]).lastMove[i].second];
+			if (((PRIMA_State) gg[i]).lastMove[i] != lastMove[i] && (help == 0 || help == -1)) {
+				table[lastMove[i].first][lastMove[i].second] = 0;
+				table[((PRIMA_State) gg[i]).lastMove[i].first][((PRIMA_State) gg[i]).lastMove[i].second] = help == -1
+						? -i - 1
+						: i;
+				lastMove[i] = ((PRIMA_State) gg[i]).lastMove[i];
+			}
+		}
+		// table[act.y][act.x] = act.color;
+		// lastMove[act.color] = new PII(act.y, act.x);
+		parent = st;
+		lastColor = st.nextColor;
+		setNextColor();
+		if (nextColor <= lastColor)
+			depth = st.depth + 1;
+		else
+			depth = st.depth;
+		realDepth = st.realDepth + 1;
+
+	}
+
+	public PRIMA_State(PRIMA_State st) {
+		width = st.width;
+		height = st.height;
+		playerNumber = st.playerNumber;
+		goalNumber = st.goalNumber;
+		table = new int[width][height];
+		lastMove = new PII[playerNumber + 1];
+		target = new PII[playerNumber + 1];
+		for (int i = 1; i <= playerNumber; ++i) {
+			lastMove[i] = st.lastMove[i];
+			target[i] = st.target[i];
+		}
+		for (int i = 0; i < width; ++i)
+			for (int j = 0; j < height; ++j)
+				table[i][j] = st.table[i][j];
+		// TODO lolo was here =)))
+		parent = st.parent;
+		lastColor = st.lastColor;
+		nextColor = st.nextColor;
+
+		depth = st.depth;
+		realDepth = st.realDepth;
 	}
 
 	private void setNextColor() {
@@ -147,79 +261,6 @@ public class DCMAGA_State extends State {
 		return table[lastMove[color].first][lastMove[color].second] <= 0;
 	}
 
-	public DCMAGA_State(String str, int mynum) {
-		File file = new File("input\\testcase\\prima\\" + str);
-		try {
-			Scanner sc;
-			if (PrimaMain.systemInput)
-				sc = new Scanner(System.in);
-			else
-				sc = new Scanner(file);
-			width = sc.nextInt();
-			height = sc.nextInt();
-			playerNumber = sc.nextInt();
-			goalNumber = sc.nextInt();
-			table = new int[width][height];
-			lastMove = new PII[playerNumber + 1];
-			target = new PII[playerNumber + 1];
-			for (int i = 1; i <= playerNumber; ++i) {
-				lastMove[i] = null;
-				target[i] = null;
-			}
-			for (int i = 0; i < width; ++i)
-				for (int j = 0; j < height; ++j) {
-					table[i][j] = sc.nextInt();
-					if (table[i][j] != 0 && table[i][j] != -1)
-						if (lastMove[table[i][j]] == null)
-							lastMove[table[i][j]] = new PII(i, j);
-					// else
-					// target[table[i][j]] = new PII(i, j);
-				}
-			lastColor = playerNumber;
-			setNextColor();
-			parent = null;
-			lastColor = -1;
-			sc.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		nextColor = mynum;
-		myNumber = mynum;
-	}
-
-	public DCMAGA_State(State[] agentState, State[] gg) {
-		DCMAGA_State st = (DCMAGA_State) agentState[1];
-		width = st.width;
-		height = st.height;
-		playerNumber = st.playerNumber;
-		table = new int[width][height];
-		lastMove = new PII[playerNumber + 1];
-		target = new PII[playerNumber + 1];
-		for (int i = 1; i <= playerNumber; ++i) {
-			lastMove[i] = st.lastMove[i];
-			target[i] = st.target[i];
-		}
-		for (int i = 0; i < width; ++i)
-			for (int j = 0; j < height; ++j)
-				table[i][j] = st.table[i][j];
-		for (int i = 1; i <= playerNumber; ++i) {
-			int help = table[((DCMAGA_State) gg[i]).lastMove[i].first][((DCMAGA_State) gg[i]).lastMove[i].second];
-			if (((DCMAGA_State) gg[i]).lastMove[i] != lastMove[i] && (help == 0 || help == -1)) {
-				table[lastMove[i].first][lastMove[i].second] = 0;
-				table[((DCMAGA_State) gg[i]).lastMove[i].first][((DCMAGA_State) gg[i]).lastMove[i].second] = help == -1
-						? -i - 1
-						: i;
-				lastMove[i] = ((DCMAGA_State) gg[i]).lastMove[i];
-			}
-		}
-		// table[act.y][act.x] = act.color;
-		// lastMove[act.color] = new PII(act.y, act.x);
-		parent = st;
-		lastColor = st.nextColor;
-		setNextColor();
-		depth = st.depth + 1;
-	}
-
 	@Override
 	public boolean isNotTerminal() {
 		int res = 0;
@@ -230,7 +271,7 @@ public class DCMAGA_State extends State {
 		if (!hasChild())
 			return false;
 		// TODO Yeah ? :D
-		if (depth >= 3 * (width + height) / 2)
+		if (realDepth + depth >= 3 * (width + height) / 2)
 			return false;
 		return true;
 	}
@@ -247,7 +288,7 @@ public class DCMAGA_State extends State {
 			m[i] = isNear(i);
 		}
 
-		return new DCMAGA_Value(-1, res / playerNumber, m);
+		return new PRIMA_Value(-1, res / playerNumber, m);
 	}
 
 	@Override
@@ -265,8 +306,8 @@ public class DCMAGA_State extends State {
 	public ArrayList<State> refreshChilds() {
 		ArrayList<State> childss = new ArrayList<State>();
 		if (table[lastMove[nextColor].first][lastMove[nextColor].second] < 0)
-			childss.add(DCMAGA_Simulator.simulateX(this,
-					new DCMAGA_Action(lastMove[nextColor].second, lastMove[nextColor].first, nextColor, true)));
+			childss.add(PRIMA_Simulator.simulateX(this,
+					new PRIMA_Action(lastMove[nextColor].second, lastMove[nextColor].first, nextColor, true)));
 		else
 			for (int i = -1; i < 2; ++i)
 				for (int j = (i == 0 ? -1 : 0); j < (i == 0 ? 2 : 1); ++j)
@@ -274,7 +315,7 @@ public class DCMAGA_State extends State {
 							&& lastMove[nextColor].second + j >= 0 && lastMove[nextColor].second + j < height
 							&& (table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == 0
 									|| table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == -1))
-						childss.add(DCMAGA_Simulator.simulateX(this, new DCMAGA_Action(lastMove[nextColor].second + j,
+						childss.add(PRIMA_Simulator.simulateX(this, new PRIMA_Action(lastMove[nextColor].second + j,
 								lastMove[nextColor].first + i, nextColor)));
 		return childss;
 	}
@@ -307,6 +348,10 @@ public class DCMAGA_State extends State {
 		return ans;
 	}
 
+	@Override
+	public int getDepth() {
+		return realDepth;
+	}
 //	private int childNumberTarget() {
 //		PII temp = lastMove[nextColor];
 //		lastMove[nextColor] = target[nextColor];
@@ -317,4 +362,53 @@ public class DCMAGA_State extends State {
 //		target[nextColor] = temp;
 //		return res;
 //	}
+
+	public void rollDown() {
+		Random random = new Random();
+		int v = random.nextInt(childNumber());
+		int ans = 0;
+		PRIMA_Action nextAct = null;
+		if (table[lastMove[nextColor].first][lastMove[nextColor].second] < 0)
+			nextAct = new PRIMA_Action(lastMove[nextColor].second, lastMove[nextColor].first, nextColor, true);
+		for (int i = -1; i < 2; ++i)
+			for (int j = (i == 0 ? -1 : 0); j < (i == 0 ? 2 : 1); ++j) {
+				if (lastMove[nextColor].first + i >= 0 && lastMove[nextColor].first + i < width
+						&& lastMove[nextColor].second + j >= 0 && lastMove[nextColor].second + j < height
+						&& (table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == 0
+								|| table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == -1)) {
+					++ans;
+					if (ans == v + 1) {
+						nextAct = new PRIMA_Action(lastMove[nextColor].second + j, lastMove[nextColor].first + i,
+								nextColor);
+						break;
+					}
+				}
+			}
+		if (nextAct != null && (table[nextAct.y][nextAct.x] == 0 || table[nextAct.y][nextAct.x] == -1 || nextAct.stay))
+			updateDown(nextAct);
+		// state = state.getRandomChild();
+	}
+
+	private void updateDown(PRIMA_Action act) {
+		// TODO lolo was here =)))
+		if (table[act.y][act.x] >= -1) {
+			table[lastMove[act.color].first][lastMove[act.color].second] = 0;
+			if (table[act.y][act.x] == -1)
+				table[act.y][act.x] = -act.color - 1;
+			else
+				table[act.y][act.x] = act.color;
+		}
+		lastMove[act.color] = new PII(act.y, act.x);
+		// parent = st;
+		// parent lol :D
+		lastColor = nextColor;
+
+		setNextColor();
+		if (nextColor <= lastColor)
+			depth = depth + 1;
+		else
+			depth = depth;
+		realDepth = realDepth;
+
+	}
 }

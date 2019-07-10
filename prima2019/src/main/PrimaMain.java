@@ -14,6 +14,7 @@ public class PrimaMain {
 	public static boolean debugMode;
 	public static String gameName;
 	public static String testCase;
+	public static boolean unix = true;
 
 	public static void main(String[] args) {
 		getConfiguration();
@@ -40,8 +41,8 @@ public class PrimaMain {
 			}
 			break;
 		case "PRIMA": // try to make it possible :D
-			game = new DCMAGA_Game();
-			simulator = new DCMAGA_Simulator();
+			game = new PRIMA_Game();
+			simulator = new PRIMA_Simulator();
 			mcts = new MonteCarloTreeSearch(game, simulator);
 			for (int i = 1; i <= 6; ++i) {
 				Value.modelNumber = i;
@@ -55,12 +56,17 @@ public class PrimaMain {
 	}
 
 	private static void getConfiguration() {
-		File file = new File("input\\configuration.txt");
+		File file;
+		if (PrimaMain.unix)
+			file = new File("input/configuration.txt");
+		else
+			file = new File("input\\configuration.txt");
 		try {
 			Scanner sc = new Scanner(file);
 			systemInput = sc.nextBoolean();
 			garbageCollectorMode = sc.nextBoolean();
 			debugMode = sc.nextBoolean();
+			unix = sc.nextBoolean();
 			gameName = sc.next();
 			testCase = sc.next();
 			sc.close();
@@ -85,7 +91,7 @@ public class PrimaMain {
 		}
 		System.out.println("FinalState: \n" + game.getState());
 		System.out.println("ModelNUmber: " + Value.modelNumber + " Time: " + (System.currentTimeMillis() - startTimes)
-				+ " Ratio: " + game.getState().getValue() + " Depth: " + game.getState().depth);
+				+ " Ratio: " + game.getState().getValue() + " Depth: " + game.getState().getDepth());
 		// TODO or value ?
 	}
 }

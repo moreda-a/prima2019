@@ -39,6 +39,9 @@ public abstract class State {
 		parent = null;
 		value = null;
 		childs = null;
+	}
 
+	public int getDepth() {
+		return depth;
 	}
 }

@@ -2,34 +2,34 @@ package prima;
 
 import main.*;
 
-public class DCMAGA_Value extends Value {
+public class PRIMA_Value extends Value {
 
-	public DCMAGA_Value(int num, double value) {
+	public PRIMA_Value(int num, double value) {
 		super(num, value);
 	}
 
-	public DCMAGA_Value(int i, double d, boolean[] m) {
+	public PRIMA_Value(int i, double d, boolean[] m) {
 		this.num = i;
 		this.value = d;
 		bestValue = value;
 		this.mark = m;
 	}
 
-	public int compareTo(DCMAGA_Value vv) {
+	public int compareTo(PRIMA_Value vv) {
 		if (value < vv.value)
 			return -1;
 		else
 			return 1;
 	}
 
-	public int compareToBest(DCMAGA_Value vv) {
+	public int compareToBest(PRIMA_Value vv) {
 		if (bestValue < vv.bestValue)
 			return -1;
 		else
 			return 1;
 	}
 
-	public int compareTo_UCT(DCMAGA_Value vv, int total_number) {
+	public int compareTo_UCT(PRIMA_Value vv, int total_number) {
 		double u1 = value + Math.sqrt(2 * Math.log(total_number) / num);
 		double u2 = vv.value + Math.sqrt(2 * Math.log(total_number) / vv.num);
 		if (u1 < u2)
@@ -39,9 +39,9 @@ public class DCMAGA_Value extends Value {
 	}
 
 	@Override
-	public DCMAGA_Value update(State state, Value simulationResult) {
-		DCMAGA_State st = (DCMAGA_State) state;
-		DCMAGA_Value simulation_result = (DCMAGA_Value) simulationResult;
+	public PRIMA_Value update(State state, Value simulationResult) {
+		PRIMA_State st = (PRIMA_State) state;
+		PRIMA_Value simulation_result = (PRIMA_Value) simulationResult;
 		++num;
 		// TODO change ?
 		// modelNumber = 3;

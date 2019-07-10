@@ -20,17 +20,17 @@ public class MonteCarloTreeSearch extends TreeSolver {
 	}
 
 	public State getBestNextStateMulti(State root) {
-		DCMAGA_State st = (DCMAGA_State) root;
+		PRIMA_State st = (PRIMA_State) root;
 		State[] gg = new State[st.playerNumber + 1];
 		State[] ng = new State[st.playerNumber + 1];
-		DCMAGA_Game ga = (DCMAGA_Game) game;
+		PRIMA_Game ga = (PRIMA_Game) game;
 		for (int i = 1; i <= st.playerNumber; ++i) {
-			((DCMAGA_State) ga.agentState[i]).nextColor = i;
+			((PRIMA_State) ga.agentState[i]).nextColor = i;
 			gg[i] = getBestNextStateSingle(ga.agentState[i]);
 		}
 		for (int i = 1; i <= st.playerNumber; ++i) {
-			ng[i] = new DCMAGA_State(ga.agentState, gg);
-			((DCMAGA_State) ng[i]).myNumber = i;
+			ng[i] = new PRIMA_State(ga.agentState, gg);
+			((PRIMA_State) ng[i]).myNumber = i;
 		}
 		ga.agentState = ng;
 		return ng[1];
@@ -93,9 +93,18 @@ public class MonteCarloTreeSearch extends TreeSolver {
 	}
 
 	private Value rollout(State state) {
-		while (state.isNotTerminal())
-			state = state.getRandomChild();
-		return state.getValue();
+		return fastRollout(state);
+//		while (state.isNotTerminal())
+//			state = state.getRandomChild();
+//		return state.getValue();
+	}
+
+	private Value fastRollout(State state) {
+		// oop??
+		PRIMA_State st = new PRIMA_State((PRIMA_State) state);
+		while (st.isNotTerminal())
+			st.rollDown();
+		return st.getValue();
 	}
 
 	private void backpropagation(Value simulation_result, State state) {

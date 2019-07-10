@@ -1,5 +1,5 @@
 package prima;
 
-public class DCMAGA_Board {
+public class PRIMA_Board {
 
 }

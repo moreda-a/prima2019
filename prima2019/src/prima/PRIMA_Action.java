@@ -2,7 +2,7 @@ package prima;
 
 import main.*;
 
-public class DCMAGA_Action extends Action {
+public class PRIMA_Action extends Action {
 
 	public boolean stay = false;
 
@@ -10,13 +10,13 @@ public class DCMAGA_Action extends Action {
 	public int y;
 	public int color;
 
-	public DCMAGA_Action(int x, int y, int c) {
+	public PRIMA_Action(int x, int y, int c) {
 		this.x = x;
 		this.y = y;
 		color = c;
 	}
 
-	public DCMAGA_Action(int x, int y, int c, boolean stay) {
+	public PRIMA_Action(int x, int y, int c, boolean stay) {
 		this.x = x;
 		this.y = y;
 		this.stay = stay;
