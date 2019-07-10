@@ -1,0 +1,13 @@
+false
+false
+false
+DCMAGAMCTS
+dcmagamcts\\testcase-6.txt
+false
+false
+false
+SPF
+systemInput
+garbageCollectorMode
+debugMode
+gameName
