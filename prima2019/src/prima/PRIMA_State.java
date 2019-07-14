@@ -167,13 +167,20 @@ public class PRIMA_State extends State {
 			for (int j = 0; j < height; ++j)
 				table[i][j] = st.table[i][j];
 		for (int i = 1; i <= playerNumber; ++i) {
-			int help = table[((PRIMA_State) gg[i]).lastMove[i].first][((PRIMA_State) gg[i]).lastMove[i].second];
-			if (((PRIMA_State) gg[i]).lastMove[i] != lastMove[i] && (help == 0 || help == -1)) {
-				table[lastMove[i].first][lastMove[i].second] = 0;
-				table[((PRIMA_State) gg[i]).lastMove[i].first][((PRIMA_State) gg[i]).lastMove[i].second] = help == -1
-						? -i - 1
-						: i;
-				lastMove[i] = ((PRIMA_State) gg[i]).lastMove[i];
+			try {
+				int help = table[((PRIMA_State) gg[i]).lastMove[i].first][((PRIMA_State) gg[i]).lastMove[i].second];
+
+				if (((PRIMA_State) gg[i]).lastMove[i] != lastMove[i] && (help == 0 || help == -1)) {
+					table[lastMove[i].first][lastMove[i].second] = 0;
+					table[((PRIMA_State) gg[i]).lastMove[i].first][((PRIMA_State) gg[i]).lastMove[i].second] = help == -1
+							? -i - 1
+							: i;
+					lastMove[i] = ((PRIMA_State) gg[i]).lastMove[i];
+				}
+			} catch (Exception e) {
+				System.out.println(i);
+				System.out.println(gg[i]);
+				System.out.println(((PRIMA_State) gg[i]).lastMove[i]);
 			}
 		}
 		// table[act.y][act.x] = act.color;
@@ -258,7 +265,7 @@ public class PRIMA_State extends State {
 	private boolean isNear(int color) {
 		// return Math.abs(lastMove[color].first - target[color].first)
 		// + Math.abs(lastMove[color].second - target[color].second) == 1;
-		return table[lastMove[color].first][lastMove[color].second] <= 0;
+		return table[lastMove[color].first][lastMove[color].second] < 0;
 	}
 
 	@Override
@@ -287,7 +294,7 @@ public class PRIMA_State extends State {
 			// res -= isNear(i) ? (double) depth / (2 * size * size) : 0;
 			m[i] = isNear(i);
 		}
-
+		res += 1 - (realDepth + depth) / (3 * (width + height) / 2);
 		return new PRIMA_Value(-1, res / playerNumber, m);
 	}
 
@@ -370,20 +377,21 @@ public class PRIMA_State extends State {
 		PRIMA_Action nextAct = null;
 		if (table[lastMove[nextColor].first][lastMove[nextColor].second] < 0)
 			nextAct = new PRIMA_Action(lastMove[nextColor].second, lastMove[nextColor].first, nextColor, true);
-		for (int i = -1; i < 2; ++i)
-			for (int j = (i == 0 ? -1 : 0); j < (i == 0 ? 2 : 1); ++j) {
-				if (lastMove[nextColor].first + i >= 0 && lastMove[nextColor].first + i < width
-						&& lastMove[nextColor].second + j >= 0 && lastMove[nextColor].second + j < height
-						&& (table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == 0
-								|| table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == -1)) {
-					++ans;
-					if (ans == v + 1) {
-						nextAct = new PRIMA_Action(lastMove[nextColor].second + j, lastMove[nextColor].first + i,
-								nextColor);
-						break;
+		else
+			for (int i = -1; i < 2; ++i)
+				for (int j = (i == 0 ? -1 : 0); j < (i == 0 ? 2 : 1); ++j) {
+					if (lastMove[nextColor].first + i >= 0 && lastMove[nextColor].first + i < width
+							&& lastMove[nextColor].second + j >= 0 && lastMove[nextColor].second + j < height
+							&& (table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == 0
+									|| table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == -1)) {
+						++ans;
+						if (ans == v + 1) {
+							nextAct = new PRIMA_Action(lastMove[nextColor].second + j, lastMove[nextColor].first + i,
+									nextColor);
+							break;
+						}
 					}
 				}
-			}
 		if (nextAct != null && (table[nextAct.y][nextAct.x] == 0 || table[nextAct.y][nextAct.x] == -1 || nextAct.stay))
 			updateDown(nextAct);
 		// state = state.getRandomChild();
@@ -391,7 +399,7 @@ public class PRIMA_State extends State {
 
 	private void updateDown(PRIMA_Action act) {
 		// TODO lolo was here =)))
-		if (table[act.y][act.x] >= -1) {
+		if (table[act.y][act.x] == -1 || table[act.y][act.x] == 0) {
 			table[lastMove[act.color].first][lastMove[act.color].second] = 0;
 			if (table[act.y][act.x] == -1)
 				table[act.y][act.x] = -act.color - 1;

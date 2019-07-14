@@ -15,6 +15,8 @@ public class PrimaMain {
 	public static String gameName;
 	public static String testCase;
 	public static boolean unix = true;
+	private static boolean[] checkModels = new boolean[7];
+	public static boolean fastRollout = true;
 
 	public static void main(String[] args) {
 		getConfiguration();
@@ -28,7 +30,8 @@ public class PrimaMain {
 			mcts = new MonteCarloTreeSearch(game, simulator);
 			for (int i = 1; i <= 6; ++i) {
 				Value.modelNumber = i;
-				run(game, simulator, mcts);
+				if (checkModels[i])
+					run(game, simulator, mcts);
 			}
 			break;
 		case "COG": // working :D
@@ -37,7 +40,8 @@ public class PrimaMain {
 			mcts = new MonteCarloTreeSearch(game, simulator);
 			for (int i = 1; i <= 6; ++i) {
 				Value.modelNumber = i;
-				run(game, simulator, mcts);
+				if (checkModels[i])
+					run(game, simulator, mcts);
 			}
 			break;
 		case "PRIMA": // try to make it possible :D
@@ -46,7 +50,8 @@ public class PrimaMain {
 			mcts = new MonteCarloTreeSearch(game, simulator);
 			for (int i = 1; i <= 6; ++i) {
 				Value.modelNumber = i;
-				run(game, simulator, mcts);
+				if (checkModels[i])
+					run(game, simulator, mcts);
 			}
 			break;
 		default:
@@ -67,6 +72,12 @@ public class PrimaMain {
 			garbageCollectorMode = sc.nextBoolean();
 			debugMode = sc.nextBoolean();
 			unix = sc.nextBoolean();
+			checkModels[1] = sc.nextBoolean();
+			checkModels[2] = sc.nextBoolean();
+			checkModels[3] = sc.nextBoolean();
+			checkModels[4] = sc.nextBoolean();
+			checkModels[5] = sc.nextBoolean();
+			checkModels[6] = sc.nextBoolean();
 			gameName = sc.next();
 			testCase = sc.next();
 			sc.close();

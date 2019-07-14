@@ -2,8 +2,9 @@ false
 false
 false
 true
+true true true true true true 
 PRIMA
-testcase-4.txt
+testcase-5.txt
 false
 false
 false
