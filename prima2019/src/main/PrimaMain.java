@@ -17,6 +17,7 @@ public class PrimaMain {
 	public static boolean unix = true;
 	private static boolean[] checkModels = new boolean[7];
 	public static boolean fastRollout = true;
+	private static boolean debug0 = false;// true;
 
 	public static void main(String[] args) {
 		getConfiguration();
@@ -92,7 +93,7 @@ public class PrimaMain {
 		long startTimes = System.currentTimeMillis();
 		while (game.notEnded()) {
 			State state = game.getState();
-			if (PrimaMain.debugMode)
+			if (PrimaMain.debugMode || PrimaMain.debug0)
 				System.out.println("gameState: \n" + state);
 			long startTime = System.currentTimeMillis();
 			State nextState = treeSolver.getBestNextState(state);
