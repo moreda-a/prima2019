@@ -37,7 +37,7 @@ public class MonteCarloTreeSearch extends TreeSolver {
 	}
 
 	public State getBestNextStateSingle(State root) {
-		root.reset();
+		root.reset(game);
 		int time = 2000;
 		while (time-- > 0) {
 			if (PrimaMain.garbageCollectorMode)

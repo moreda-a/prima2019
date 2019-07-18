@@ -18,6 +18,7 @@ public class PrimaMain {
 	private static boolean[] checkModels = new boolean[7];
 	public static boolean fastRollout = true;
 	private static boolean debug0 = false;// true;
+	public static boolean localSolver = false;
 
 	public static void main(String[] args) {
 		getConfiguration();
@@ -81,6 +82,7 @@ public class PrimaMain {
 			checkModels[6] = sc.nextBoolean();
 			gameName = sc.next();
 			testCase = sc.next();
+			localSolver = sc.nextBoolean();
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

@@ -41,6 +41,8 @@ public class PRIMA_State extends State {
 	public int goalNumber;
 	public int nextColor;
 	public int lastColor;
+	public int localLastColor;
+	public int localNextColor;
 
 	public int myNumber = -1;
 
@@ -96,6 +98,7 @@ public class PRIMA_State extends State {
 		lastMove[act.color] = new PII(act.y, act.x);
 		parent = st;
 		lastColor = st.nextColor;
+		localLastColor = st.localNextColor;
 		myNumber = st.myNumber;
 
 		setNextColor();
@@ -139,8 +142,10 @@ public class PRIMA_State extends State {
 					// target[table[i][j]] = new PII(i, j);
 				}
 			lastColor = playerNumber;
+			localLastColor = playerNumber - 1;
 			setNextColor();
 			parent = null;
+			localLastColor = -1;
 			lastColor = -1;
 			sc.close();
 		} catch (FileNotFoundException e) {
@@ -187,6 +192,7 @@ public class PRIMA_State extends State {
 		// lastMove[act.color] = new PII(act.y, act.x);
 		parent = st;
 		lastColor = st.nextColor;
+		localLastColor = st.localNextColor;
 		setNextColor();
 		if (nextColor <= lastColor)
 			depth = st.depth + 1;
@@ -215,12 +221,26 @@ public class PRIMA_State extends State {
 		parent = st.parent;
 		lastColor = st.lastColor;
 		nextColor = st.nextColor;
+		localLastColor = st.localLastColor;
+		localNextColor = st.localNextColor;
 
 		depth = st.depth;
 		realDepth = st.realDepth;
 	}
 
 	private void setNextColor() {
+		if (PrimaMain.localSolver) {
+			for (int i = 0; i < Game.localize.size(); ++i) {
+				nextColor = Game.localize.get((i + localLastColor + 1) % Game.localize.size());
+				localNextColor = (i + localLastColor + 1) % Game.localize.size();
+				int cn = childNumber();
+				if (cn == 0)
+					continue;
+				else
+					break;
+			}
+			return;
+		}
 		double best = 1000000;
 		int bestColor = lastColor % playerNumber + 1;
 		for (int i = 1; i <= playerNumber; ++i) {
@@ -278,7 +298,7 @@ public class PRIMA_State extends State {
 		if (!hasChild())
 			return false;
 		// TODO Yeah ? :D
-		if (realDepth + depth >= 3 * (width + height) / 2)
+		if (realDepth + depth >= Game.endTime)
 			return false;
 		return true;
 	}
@@ -294,7 +314,7 @@ public class PRIMA_State extends State {
 			// res -= isNear(i) ? (double) depth / (2 * size * size) : 0;
 			m[i] = isNear(i);
 		}
-		res += 1 - (realDepth + depth) / (3 * (width + height) / 2);
+		res += 1 - (realDepth + depth) / Game.endTime;
 		return new PRIMA_Value(-1, res / playerNumber, m);
 	}
 
@@ -410,6 +430,7 @@ public class PRIMA_State extends State {
 		// parent = st;
 		// parent lol :D
 		lastColor = nextColor;
+		localLastColor = localNextColor;
 
 		setNextColor();
 		if (nextColor <= lastColor)
@@ -417,6 +438,18 @@ public class PRIMA_State extends State {
 		else
 			depth = depth;
 		realDepth = realDepth;
+
+	}
+
+	@Override
+	protected void setLocalAgents(Game game) {
+		Game.localize = new ArrayList<Integer>();
+		for (int i = 1; i <= playerNumber; ++i) {
+			if (Math.abs(lastMove[i].first - lastMove[myNumber].first)
+					+ Math.abs(lastMove[i].second - lastMove[myNumber].second) < 10)
+				Game.localize.add(i);
+			// PII pii = new PII(i, j);
+		}
 
 	}
 }

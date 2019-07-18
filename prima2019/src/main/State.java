@@ -41,7 +41,16 @@ public abstract class State {
 		childs = null;
 	}
 
+	protected abstract void setLocalAgents(Game game);
+
 	public int getDepth() {
 		return depth;
+	}
+
+	public void reset(Game game) {
+		setLocalAgents(game);
+		reset();
+		// TODO Auto-generated method stub
+
 	}
 }

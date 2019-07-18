@@ -300,4 +300,11 @@ public class SPF_State extends State {
 		target[nextColor] = temp;
 		return res;
 	}
+
+	@Override
+	protected void setLocalAgents(Game game) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

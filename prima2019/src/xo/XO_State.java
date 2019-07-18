@@ -121,4 +121,10 @@ public class XO_State extends State {
 		return null;
 	}
 
+	@Override
+	protected void setLocalAgents(Game game) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

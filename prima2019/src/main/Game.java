@@ -1,7 +1,11 @@
 package main;
 
+import java.util.ArrayList;
+
 public abstract class Game {
 
+	public static ArrayList<Integer> localize = new ArrayList<Integer>();
+	public static int endTime;
 	protected boolean Centralized;
 	protected State myState;
 
