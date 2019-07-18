@@ -19,6 +19,7 @@ public class PrimaMain {
 	public static boolean fastRollout = true;
 	private static boolean debug0 = false;// true;
 	public static boolean localSolver = false;
+	public static long[] timer;
 
 	public static void main(String[] args) {
 		getConfiguration();
@@ -90,22 +91,35 @@ public class PrimaMain {
 
 	}
 
-	private static void run(Game game, Simulator simulator, TreeSolver treeSolver) {
+	private static void run(Game game, Simulator simulator, TreeSolver treeSolver) {// O(pTI^2 + pIT^2 + pTIn^2)
+		// O(n^2I^2 + In^4)
 		game.init();
 		long startTimes = System.currentTimeMillis();
 		while (game.notEnded()) {
 			State state = game.getState();
+
 			if (PrimaMain.debugMode || PrimaMain.debug0)
 				System.out.println("gameState: \n" + state);
 			long startTime = System.currentTimeMillis();
-			State nextState = treeSolver.getBestNextState(state);
+
+			State nextState = treeSolver.getBestNextState(state);// O(pI^2 + pIT + pIn^2)
+
 			if (PrimaMain.debugMode)
 				System.out.println(System.currentTimeMillis() - startTime);
+
 			game.updateState(nextState);
 		}
 		System.out.println("FinalState: \n" + game.getState());
 		System.out.println("ModelNUmber: " + Value.modelNumber + " Time: " + (System.currentTimeMillis() - startTimes)
 				+ " Ratio: " + game.getState().getValue() + " Depth: " + game.getState().getDepth());
+		long maxx = Long.MIN_VALUE;
+		double avg = 0;
+		for (int i = 1; i < ((PRIMA_State) game.getState()).playerNumber; ++i) {
+			maxx = Math.max(maxx, timer[i]);
+			avg = (avg * (i - 1) + timer[i]) / i;
+		}
+		System.out.println("maxTime: " + maxx + " avgTime: " + avg);
+
 		// TODO or value ?
 	}
 }

@@ -19,16 +19,18 @@ public class MonteCarloTreeSearch extends TreeSolver {
 
 	}
 
-	public State getBestNextStateMulti(State root) {
+	public State getBestNextStateMulti(State root) {// O(pI^2 + pIT + pIn^2)
 		PRIMA_State st = (PRIMA_State) root;
 		State[] gg = new State[st.playerNumber + 1];
 		State[] ng = new State[st.playerNumber + 1];
 		PRIMA_Game ga = (PRIMA_Game) game;
-		for (int i = 1; i <= st.playerNumber; ++i) {
+		for (int i = 1; i <= st.playerNumber; ++i) {// O(pI^2 + pIT + pIn^2)
+			long stt = System.currentTimeMillis();
 			((PRIMA_State) ga.agentState[i]).nextColor = i;
-			gg[i] = getBestNextStateSingle(ga.agentState[i]);
+			gg[i] = getBestNextStateSingle(ga.agentState[i]);// O(I^2 + IT + In^2)
+			PrimaMain.timer[i] += System.currentTimeMillis() - stt;
 		}
-		for (int i = 1; i <= st.playerNumber; ++i) {
+		for (int i = 1; i <= st.playerNumber; ++i) {// O(p*n^2)
 			ng[i] = new PRIMA_State(ga.agentState, gg);
 			((PRIMA_State) ng[i]).myNumber = i;
 		}
@@ -36,16 +38,16 @@ public class MonteCarloTreeSearch extends TreeSolver {
 		return ng[1];
 	}
 
-	public State getBestNextStateSingle(State root) {
+	public State getBestNextStateSingle(State root) {// O(I^2 + IT + In^2)
 		root.reset(game);
 		int time = 2000;
 		while (time-- > 0) {
 			if (PrimaMain.garbageCollectorMode)
 				System.gc();
-			State leaf = selection(root);
-			State expandedLeaf = expansion(leaf);
-			Value simulationResult = rollout(expandedLeaf);
-			backpropagation(simulationResult, expandedLeaf);
+			State leaf = selection(root);// O(I)
+			State expandedLeaf = expansion(leaf);// O(n^2)
+			Value simulationResult = rollout(expandedLeaf);// O(T+n^2)
+			backpropagation(simulationResult, expandedLeaf);// O(I)
 		}
 		return bestChild(root);
 	}

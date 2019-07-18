@@ -4,7 +4,7 @@ false
 true
 true true true true true true 
 PRIMA
-testcase-18.txt
+testcase-14.txt
 false
 
 false
