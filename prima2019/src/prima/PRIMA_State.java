@@ -7,6 +7,10 @@ import main.*;
 
 public class PRIMA_State extends State {
 
+	static int[] dy = { -1, 0, 0, 1 };
+	static int[] dx = { 0, -1, 1, 0 };
+
+	static PII pos[][];
 	boolean hashed;
 	int hash;
 
@@ -35,8 +39,8 @@ public class PRIMA_State extends State {
 	public PRIMA_Board board;
 	public int table[][];
 	// public int size;
-	public int height;
-	public int width;
+	public int height;// y
+	public int width;// x
 	public int playerNumber;
 	public int goalNumber;
 	public int nextColor;
@@ -50,6 +54,8 @@ public class PRIMA_State extends State {
 	public PII[] target;
 
 	public int realDepth = 0;
+	private Boolean isNotTerminal = null;
+	public boolean notChangable = true;
 
 	class PII {
 		public PII(int i, int j) {
@@ -62,8 +68,9 @@ public class PRIMA_State extends State {
 
 		@Override
 		public String toString() {
-			return "{" + first + ", " + second + "}";
+			return "PII [first=" + first + ", second=" + second + "]";
 		}
+
 	}
 
 	@Override
@@ -95,7 +102,7 @@ public class PRIMA_State extends State {
 			else
 				table[act.y][act.x] = act.color;
 		}
-		lastMove[act.color] = new PII(act.y, act.x);
+		lastMove[act.color] = pos[act.y][act.x];
 		parent = st;
 		lastColor = st.nextColor;
 		localLastColor = st.localNextColor;
@@ -132,12 +139,16 @@ public class PRIMA_State extends State {
 				lastMove[i] = null;
 				target[i] = null;
 			}
+			pos = new PII[width][height];
+			for (int i = 0; i < width; ++i)
+				for (int j = 0; j < height; ++j)
+					pos[i][j] = new PII(i, j);
 			for (int i = 0; i < width; ++i)
 				for (int j = 0; j < height; ++j) {
 					table[i][j] = sc.nextInt();
 					if (table[i][j] != 0 && table[i][j] != -1)
 						if (lastMove[table[i][j]] == null)
-							lastMove[table[i][j]] = new PII(i, j);
+							lastMove[table[i][j]] = pos[i][j];
 					// else
 					// target[table[i][j]] = new PII(i, j);
 				}
@@ -155,8 +166,9 @@ public class PRIMA_State extends State {
 		myNumber = mynum;
 	}
 
-	public PRIMA_State(State[] agentState, State[] gg) {
+	public PRIMA_State(State[] agentState, State[] gg, int myNumber) {
 		PRIMA_State st = (PRIMA_State) agentState[1];
+		this.myNumber = myNumber;
 		width = st.width;
 		height = st.height;
 		playerNumber = st.playerNumber;
@@ -199,7 +211,6 @@ public class PRIMA_State extends State {
 		else
 			depth = st.depth;
 		realDepth = st.realDepth + 1;
-
 	}
 
 	public PRIMA_State(PRIMA_State st) {
@@ -241,8 +252,8 @@ public class PRIMA_State extends State {
 			}
 			return;
 		}
-		double best = 1000000;
-		int bestColor = lastColor % playerNumber + 1;
+		// double best = 1000000;
+		// int bestColor = lastColor % playerNumber + 1;
 		for (int i = 1; i <= playerNumber; ++i) {
 			nextColor = (lastColor + i - 1) % playerNumber + 1;
 			int cn = childNumber();
@@ -290,17 +301,18 @@ public class PRIMA_State extends State {
 
 	@Override
 	public boolean isNotTerminal() {
+		if (notChangable && isNotTerminal != null)
+			return isNotTerminal;
 		int res = 0;
-		for (int i = 1; i <= playerNumber; ++i)
-			res += isNear(i) ? 1 : 0;
-		if (res == playerNumber)
-			return false;
-		if (!hasChild())
-			return false;
-		// TODO Yeah ? :D
-		if (realDepth + depth >= Game.endTime)
-			return false;
-		return true;
+		for (int i = 1; i <= playerNumber; ++i) {
+			if (!isNear(i))
+				break;
+			++res;
+		}
+		if (res == playerNumber || !hasChild() || realDepth + depth >= Game.endTime)
+			return isNotTerminal = false;
+		return isNotTerminal = true;
+
 	}
 
 	@Override
@@ -391,29 +403,41 @@ public class PRIMA_State extends State {
 //	}
 
 	public void rollDown() {
-		Random random = new Random();
-		int v = random.nextInt(childNumber());
+		// TODO fast random
+		long stt = System.currentTimeMillis();
+//		Random random = new Random();
+//		int v = random.nextInt(childNumber());
+		int v = FastMath.rand256() % childNumber();
+		// int v = (int) (stt % childNumber());
 		int ans = 0;
 		PRIMA_Action nextAct = null;
+		PrimaMain.shitTimer[13] += System.currentTimeMillis() - stt;
+		stt = System.currentTimeMillis();
 		if (table[lastMove[nextColor].first][lastMove[nextColor].second] < 0)
 			nextAct = new PRIMA_Action(lastMove[nextColor].second, lastMove[nextColor].first, nextColor, true);
 		else
-			for (int i = -1; i < 2; ++i)
-				for (int j = (i == 0 ? -1 : 0); j < (i == 0 ? 2 : 1); ++j) {
-					if (lastMove[nextColor].first + i >= 0 && lastMove[nextColor].first + i < width
-							&& lastMove[nextColor].second + j >= 0 && lastMove[nextColor].second + j < height
-							&& (table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == 0
-									|| table[lastMove[nextColor].first + i][lastMove[nextColor].second + j] == -1)) {
+			for (int i = 0; i < 4; ++i)
+				for (int j = 0; j < 4; ++j) {
+					if (lastMove[nextColor].first + dy[i] >= 0 && lastMove[nextColor].first + dy[i] < width
+							&& lastMove[nextColor].second + dy[j] >= 0 && lastMove[nextColor].second + dy[j] < height
+							&& (table[lastMove[nextColor].first + dy[i]][lastMove[nextColor].second + dy[j]] == 0
+									|| table[lastMove[nextColor].first + dy[i]][lastMove[nextColor].second
+											+ dy[j]] == -1)) {
 						++ans;
 						if (ans == v + 1) {
-							nextAct = new PRIMA_Action(lastMove[nextColor].second + j, lastMove[nextColor].first + i,
-									nextColor);
+							nextAct = new PRIMA_Action(lastMove[nextColor].second + dy[j],
+									lastMove[nextColor].first + dy[i], nextColor);
 							break;
 						}
 					}
 				}
+		PrimaMain.shitTimer[11] += System.currentTimeMillis() - stt;
+		stt = System.currentTimeMillis();
 		if (nextAct != null && (table[nextAct.y][nextAct.x] == 0 || table[nextAct.y][nextAct.x] == -1 || nextAct.stay))
 			updateDown(nextAct);
+
+		PrimaMain.shitTimer[12] += System.currentTimeMillis() - stt;
+		stt = System.currentTimeMillis();
 		// state = state.getRandomChild();
 	}
 
@@ -425,8 +449,8 @@ public class PRIMA_State extends State {
 				table[act.y][act.x] = -act.color - 1;
 			else
 				table[act.y][act.x] = act.color;
+			lastMove[act.color] = pos[act.y][act.x];
 		}
-		lastMove[act.color] = new PII(act.y, act.x);
 		// parent = st;
 		// parent lol :D
 		lastColor = nextColor;
@@ -435,9 +459,9 @@ public class PRIMA_State extends State {
 		setNextColor();
 		if (nextColor <= lastColor)
 			depth = depth + 1;
-		else
-			depth = depth;
-		realDepth = realDepth;
+//		else
+//			depth = depth;
+//		realDepth = realDepth;
 
 	}
 

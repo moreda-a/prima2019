@@ -20,6 +20,7 @@ public class PrimaMain {
 	private static boolean debug0 = false;// true;
 	public static boolean localSolver = false;
 	public static long[] timer;
+	public static long[] shitTimer = new long[100];
 
 	public static void main(String[] args) {
 		getConfiguration();
@@ -93,6 +94,9 @@ public class PrimaMain {
 
 	private static void run(Game game, Simulator simulator, TreeSolver treeSolver) {// O(pTI^2 + pIT^2 + pTIn^2)
 		// O(n^2I^2 + In^4)
+		for (int i = 0; i < 100; ++i) {
+			shitTimer[i] = 0;
+		}
 		game.init();
 		long startTimes = System.currentTimeMillis();
 		while (game.notEnded()) {
@@ -119,7 +123,9 @@ public class PrimaMain {
 			avg = (avg * (i - 1) + timer[i]) / i;
 		}
 		System.out.println("maxTime: " + maxx + " avgTime: " + avg);
-
+		for (int i = 0; i < 20; ++i) {
+			System.out.println("shitTimer " + i + " :" + shitTimer[i]);
+		}
 		// TODO or value ?
 	}
 }
