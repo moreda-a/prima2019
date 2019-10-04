@@ -1,0 +1,82 @@
+FinalState: 
+{0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -16, 0, 0, 0, 
+ 0, 0, 0, 0, -3, 0, -15, 0, 0, 0, 0, 0, -5, 0, -18, 0, 0, 0, 0, -2, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, -11, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -17, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -14, 0, 
+ 0, 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -20, 0, 0, 0, 0, -9, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -13, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, -21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -12, 0, 0, -1, }
+ModelNUmber: 1 Time: 198999 Ratio: {num: -1, value: 0.95, maxValue: 0.95} Depth: 60
+maxTime: 10170 avgTime: 9955.263157894737
+ Time: 8363 Ratio: {num: -1, value: 0.15, maxValue: 0.15} Depth: 1
+ Time: 15817 Ratio: {num: -1, value: 0.25, maxValue: 0.25} Depth: 2
+ Time: 22990 Ratio: {num: -1, value: 0.55, maxValue: 0.55} Depth: 3
+ Time: 29577 Ratio: {num: -1, value: 0.65, maxValue: 0.65} Depth: 4
+ Time: 35724 Ratio: {num: -1, value: 0.65, maxValue: 0.65} Depth: 5
+ Time: 41818 Ratio: {num: -1, value: 0.7, maxValue: 0.7} Depth: 6
+ Time: 47738 Ratio: {num: -1, value: 0.7, maxValue: 0.7} Depth: 7
+ Time: 53536 Ratio: {num: -1, value: 0.7, maxValue: 0.7} Depth: 8
+ Time: 59179 Ratio: {num: -1, value: 0.7, maxValue: 0.7} Depth: 9
+ Time: 64668 Ratio: {num: -1, value: 0.7, maxValue: 0.7} Depth: 10
+ Time: 70009 Ratio: {num: -1, value: 0.7, maxValue: 0.7} Depth: 11
+ Time: 75348 Ratio: {num: -1, value: 0.75, maxValue: 0.75} Depth: 12
+ Time: 80427 Ratio: {num: -1, value: 0.75, maxValue: 0.75} Depth: 13
+ Time: 85394 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 14
+ Time: 90139 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 15
+ Time: 94795 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 16
+ Time: 99329 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 17
+ Time: 103721 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 18
+ Time: 108059 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 19
+ Time: 112339 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 20
+ Time: 116464 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 21
+ Time: 120461 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 22
+ Time: 124368 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 23
+ Time: 128210 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 24
+ Time: 131943 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 25
+ Time: 135571 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 26
+ Time: 139123 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 27
+ Time: 142550 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 28
+ Time: 145916 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 29
+ Time: 149142 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 30
+ Time: 152354 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 31
+ Time: 155561 Ratio: {num: -1, value: 0.85, maxValue: 0.85} Depth: 32
+ Time: 158488 Ratio: {num: -1, value: 0.85, maxValue: 0.85} Depth: 33
+ Time: 161561 Ratio: {num: -1, value: 0.85, maxValue: 0.85} Depth: 34
+ Time: 164195 Ratio: {num: -1, value: 0.85, maxValue: 0.85} Depth: 35
+ Time: 166750 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 36
+ Time: 169144 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 37
+ Time: 171436 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 38
+ Time: 173654 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 39
+ Time: 175765 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 40
+ Time: 177787 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 41
+ Time: 179730 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 42
+ Time: 181587 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 43
+ Time: 183333 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 44
+ Time: 184979 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 45
+ Time: 186551 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 46
+ Time: 188047 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 47
+ Time: 189419 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 48
+ Time: 190706 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 49
+ Time: 191910 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 50
+ Time: 193027 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 51
+ Time: 194047 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 52
+ Time: 195249 Ratio: {num: -1, value: 0.9, maxValue: 0.9} Depth: 53
+ Time: 196142 Ratio: {num: -1, value: 0.95, maxValue: 0.95} Depth: 54
+ Time: 196949 Ratio: {num: -1, value: 0.95, maxValue: 0.95} Depth: 55
+ Time: 197671 Ratio: {num: -1, value: 0.95, maxValue: 0.95} Depth: 56
+ Time: 198270 Ratio: {num: -1, value: 0.95, maxValue: 0.95} Depth: 57
+ Time: 198872 Ratio: {num: -1, value: 0.95, maxValue: 0.95} Depth: 59
+ Time: 201.325 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 60

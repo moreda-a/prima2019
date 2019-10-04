@@ -44,32 +44,18 @@ public class MonteCarloTreeSearch extends TreeSolver {
 		while (time-- > 0) {
 			if (PrimaMain.garbageCollectorMode)
 				System.gc();
-			long stt = System.currentTimeMillis();
 			State leaf = selection(root);// O(I)
-			PrimaMain.shitTimer[0] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
 			State expandedLeaf = expansion(leaf);// O(n^2)
-			PrimaMain.shitTimer[1] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
 			Value simulationResult = rollout(expandedLeaf);// O(T+n^2)
-			PrimaMain.shitTimer[2] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
 			backpropagation(simulationResult, expandedLeaf);// O(I)
-			PrimaMain.shitTimer[3] += System.currentTimeMillis() - stt;
 		}
 		return bestChild(root);
 	}
 
 	private State selection(State state) {// Done
 		State st = state;
-		long stt = System.currentTimeMillis();
-		while (st.isInTree && st.isNotTerminal()) {
-			PrimaMain.shitTimer[4] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
+		while (st.isInTree && st.isNotTerminal())
 			st = best_uct(st);
-			PrimaMain.shitTimer[5] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
-		}
 		return st;
 	}
 
@@ -91,14 +77,11 @@ public class MonteCarloTreeSearch extends TreeSolver {
 
 	private State best_uct(State state) { // DONE
 		// Value vx = states.get(state);
-		long stt = System.currentTimeMillis();
 		Value vx = state.value;
 		ArrayList<State> childs = state.getChilds();
 
 		State ans = null;
 		Value vbest = null;
-		PrimaMain.shitTimer[6] += System.currentTimeMillis() - stt;
-		stt = System.currentTimeMillis();
 		for (State st : childs) {
 			if (!st.isInTree)
 				return st;
@@ -108,7 +91,6 @@ public class MonteCarloTreeSearch extends TreeSolver {
 				ans = st;
 			}
 		}
-		PrimaMain.shitTimer[7] += System.currentTimeMillis() - stt;
 		return ans;
 	}
 
@@ -122,19 +104,9 @@ public class MonteCarloTreeSearch extends TreeSolver {
 
 	private Value fastRollout(State state) {
 		// oop??
-		FastMath.initRand(new Random().nextInt(), new Random().nextInt());
-		long stt = System.currentTimeMillis();
 		PRIMA_State st = new PRIMA_State((PRIMA_State) state);
-		st.notChangable = false;
-		PrimaMain.shitTimer[8] += System.currentTimeMillis() - stt;
-		stt = System.currentTimeMillis();
-		while (st.isNotTerminal()) {
-			PrimaMain.shitTimer[9] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
+		while (st.isNotTerminal())
 			st.rollDown();
-			PrimaMain.shitTimer[10] += System.currentTimeMillis() - stt;
-			stt = System.currentTimeMillis();
-		}
 		return st.getValue();
 	}
 

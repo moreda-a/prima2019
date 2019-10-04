@@ -29,15 +29,6 @@ public class PRIMA_Value extends Value {
 			return 1;
 	}
 
-	public int compareTo_UCT(PRIMA_Value vv, int total_number) {
-		double u1 = value + Math.sqrt(2 * Math.log(total_number) / num);
-		double u2 = vv.value + Math.sqrt(2 * Math.log(total_number) / vv.num);
-		if (u1 < u2)
-			return -1;
-		else
-			return 1;
-	}
-
 	@Override
 	public PRIMA_Value update(State state, Value simulationResult) {
 		PRIMA_State st = (PRIMA_State) state;
@@ -81,6 +72,16 @@ public class PRIMA_Value extends Value {
 
 	@Override
 	public String toString() {
-		return "{num: " + num + ", value: " + value + ", maxValue: " + bestValue + "}";
+		return "PRIMA_Value [num=" + num + ", value=" + value + ", bestValue=" + bestValue + "]";
+	}
+
+	@Override
+	public int compareTo_UCT(Value vv, int total_number) {
+		double u1 = value + Math.sqrt(2 * Math.log(total_number) / num);
+		double u2 = vv.value + Math.sqrt(2 * Math.log(total_number) / vv.num);
+		if (u1 < u2)
+			return -1;
+		else
+			return 1;
 	}
 }

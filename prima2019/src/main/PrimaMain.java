@@ -2,6 +2,8 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import cog.*;
@@ -16,52 +18,56 @@ public class PrimaMain {
 	public static String testCase;
 	public static boolean unix = true;
 	private static boolean[] checkModels = new boolean[7];
-	public static boolean fastRollout = true;
+	public static boolean fastRollout = false;
 	private static boolean debug0 = false;// true;
 	public static boolean localSolver = false;
 	public static long[] timer;
 	public static long[] shitTimer = new long[100];
+	static int q = -1;
+	public static Queue<String> sque = new LinkedList<String>();
 
 	public static void main(String[] args) {
-		getConfiguration();
-		Game game;
-		Simulator simulator;
-		TreeSolver mcts;
-		switch (gameName) {
-		case "XO": // not working probably, not checked in long time.
-			game = new XO_Game();
-			simulator = new XO_Simulator();
-			mcts = new MonteCarloTreeSearch(game, simulator);
-			for (int i = 1; i <= 6; ++i) {
-				Value.modelNumber = i;
-				if (checkModels[i])
-					run(game, simulator, mcts);
+		do {
+			getConfiguration();
+			Game game;
+			Simulator simulator;
+			TreeSolver mcts;
+			switch (gameName) {
+			case "XO": // not working probably, not checked in long time.
+				game = new XO_Game();
+				simulator = new XO_Simulator();
+				mcts = new MonteCarloTreeSearch(game, simulator);
+				for (int i = 1; i <= 6; ++i) {
+					Value.modelNumber = i;
+					if (checkModels[i])
+						run(game, simulator, mcts);
+				}
+				break;
+			case "COG": // working :D
+				game = new SPF_Game();
+				simulator = new SPF_Simulator();
+				mcts = new MonteCarloTreeSearch(game, simulator);
+				for (int i = 1; i <= 6; ++i) {
+					Value.modelNumber = i;
+					if (checkModels[i])
+						run(game, simulator, mcts);
+				}
+				break;
+			case "PRIMA": // try to make it possible :D
+				game = new PRIMA_Game();
+				simulator = new PRIMA_Simulator();
+				mcts = new MonteCarloTreeSearch(game, simulator);
+				for (int i = 1; i <= 6; ++i) {
+					Value.modelNumber = i;
+					if (checkModels[i])
+						run(game, simulator, mcts);
+				}
+				break;
+			default:
+				System.out.println("Unknown GAME!! : " + gameName);
+				break;
 			}
-			break;
-		case "COG": // working :D
-			game = new SPF_Game();
-			simulator = new SPF_Simulator();
-			mcts = new MonteCarloTreeSearch(game, simulator);
-			for (int i = 1; i <= 6; ++i) {
-				Value.modelNumber = i;
-				if (checkModels[i])
-					run(game, simulator, mcts);
-			}
-			break;
-		case "PRIMA": // try to make it possible :D
-			game = new PRIMA_Game();
-			simulator = new PRIMA_Simulator();
-			mcts = new MonteCarloTreeSearch(game, simulator);
-			for (int i = 1; i <= 6; ++i) {
-				Value.modelNumber = i;
-				if (checkModels[i])
-					run(game, simulator, mcts);
-			}
-			break;
-		default:
-			System.out.println("Unknown GAME!! : " + gameName);
-			break;
-		}
+		} while (--q > 0);
 	}
 
 	private static void getConfiguration() {
@@ -72,20 +78,29 @@ public class PrimaMain {
 			file = new File("input\\configuration.txt");
 		try {
 			Scanner sc = new Scanner(file);
-			systemInput = sc.nextBoolean();
-			garbageCollectorMode = sc.nextBoolean();
-			debugMode = sc.nextBoolean();
-			unix = sc.nextBoolean();
-			checkModels[1] = sc.nextBoolean();
-			checkModels[2] = sc.nextBoolean();
-			checkModels[3] = sc.nextBoolean();
-			checkModels[4] = sc.nextBoolean();
-			checkModels[5] = sc.nextBoolean();
-			checkModels[6] = sc.nextBoolean();
-			gameName = sc.next();
-			testCase = sc.next();
-			localSolver = sc.nextBoolean();
-			sc.close();
+			if (q == -1) {
+				q = sc.nextInt();
+				systemInput = sc.nextBoolean();
+				garbageCollectorMode = sc.nextBoolean();
+				debugMode = sc.nextBoolean();
+				unix = sc.nextBoolean();
+				checkModels[1] = sc.nextBoolean();
+				checkModels[2] = sc.nextBoolean();
+				checkModels[3] = sc.nextBoolean();
+				checkModels[4] = sc.nextBoolean();
+				checkModels[5] = sc.nextBoolean();
+				checkModels[6] = sc.nextBoolean();
+				gameName = sc.next();
+				testCase = sc.next();
+				localSolver = sc.nextBoolean();
+				System.out.println(testCase + " : ");
+				for (int i = 0; i < q; ++i)
+					sque.add(sc.next());
+				sc.close();
+			} else {
+				testCase = sque.poll();
+				System.out.println(testCase + " : ");
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -113,9 +128,9 @@ public class PrimaMain {
 
 			game.updateState(nextState);
 		}
-		System.out.println("FinalState: \n" + game.getState());
+		//System.out.println("FinalState: \n" + game.getState());
 		System.out.println("ModelNUmber: " + Value.modelNumber + " Time: " + (System.currentTimeMillis() - startTimes)
-				+ " Ratio: " + game.getState().getValue() + " Depth: " + game.getState().getDepth());
+				+ " Ratio: " + game.getState().getValueX() + " Depth: " + game.getState().getDepth());
 		long maxx = Long.MIN_VALUE;
 		double avg = 0;
 		for (int i = 1; i < ((PRIMA_State) game.getState()).playerNumber; ++i) {
@@ -123,9 +138,9 @@ public class PrimaMain {
 			avg = (avg * (i - 1) + timer[i]) / i;
 		}
 		System.out.println("maxTime: " + maxx + " avgTime: " + avg);
-		for (int i = 0; i < 20; ++i) {
-			System.out.println("shitTimer " + i + " :" + shitTimer[i]);
-		}
+//		for (int i = 0; i < 20; ++i) {
+//			System.out.println("shitTimer " + i + " :" + shitTimer[i]);
+//		}
 		// TODO or value ?
 	}
 }

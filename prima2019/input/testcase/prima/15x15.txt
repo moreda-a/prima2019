@@ -1,0 +1,38 @@
+FinalState: 
+{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, 0, 0, 0, 
+ 0, 0, -13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -16, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, -14, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, -11, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, -5, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, -9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, -15, 0, 0, -10, 0, 0, 0, 0, -12, 0, 0, 0, 0, 
+ 0, 0, 0, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, -7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 0, 0, 0, }
+ModelNUmber: 2 Time: 38477 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 20
+maxTime: 2623 avgTime: 2569.714285714286
+ Time: 3108 Ratio: {num: -1, value: 0.2, maxValue: 0.2} Depth: 1
+ Time: 6100 Ratio: {num: -1, value: 0.3333333333333333, maxValue: 0.3333333333333333} Depth: 2
+ Time: 8880 Ratio: {num: -1, value: 0.4, maxValue: 0.4} Depth: 3
+ Time: 11547 Ratio: {num: -1, value: 0.4666666666666667, maxValue: 0.4666666666666667} Depth: 4
+ Time: 14029 Ratio: {num: -1, value: 0.6, maxValue: 0.6} Depth: 5
+ Time: 16342 Ratio: {num: -1, value: 0.6666666666666666, maxValue: 0.6666666666666666} Depth: 6
+ Time: 18550 Ratio: {num: -1, value: 0.7333333333333333, maxValue: 0.7333333333333333} Depth: 7
+ Time: 20579 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 8
+ Time: 22554 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 9
+ Time: 24451 Ratio: {num: -1, value: 0.8, maxValue: 0.8} Depth: 10
+ Time: 26254 Ratio: {num: -1, value: 0.8666666666666667, maxValue: 0.8666666666666667} Depth: 11
+ Time: 27995 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 12
+ Time: 29623 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 13
+ Time: 31319 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 14
+ Time: 32859 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 15
+ Time: 34401 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 16
+ Time: 35757 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 17
+ Time: 36983 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 18
+ Time: 37930 Ratio: {num: -1, value: 0.9333333333333333, maxValue: 0.9333333333333333} Depth: 19
+ Time: 38477 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 20

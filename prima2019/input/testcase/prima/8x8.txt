@@ -1,0 +1,16 @@
+FinalState: 
+{0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, -6, 0, 0, 0, 0, 0, -7, 
+ 0, -4, 0, 0, -5, 0, 0, 0, 
+ 0, 0, 0, -3, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, -9, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, -8, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 0, 0, -2, }
+ModelNUmber: 1 Time: 1992 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 6
+maxTime: 336 avgTime: 249.85714285714286
+ Time: 584 Ratio: {num: -1, value: 0.25, maxValue: 0.25} Depth: 1
+ Time: 1358 Ratio: {num: -1, value: 0.5, maxValue: 0.5} Depth: 3
+ Time: 1932 Ratio: {num: -1, value: 0.875, maxValue: 0.875} Depth: 5
+ Time: 1992 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 6
+ 

@@ -53,4 +53,6 @@ public abstract class State {
 		// TODO Auto-generated method stub
 
 	}
+
+	protected abstract Value getValueX();
 }

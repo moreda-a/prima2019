@@ -1,0 +1,10 @@
+
+FinalState: 
+{0, 0, 0, 0, 0, 
+ 0, 0, 0, 0, 0, 
+ 0, 0, 0, -6, -4, 
+ 0, -2, 0, -5, 0, 
+ 0, 0, 0, 0, -3, }
+ModelNUmber: 2 Time: 276 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 5
+maxTime: 62 avgTime: 55.25
+ Time: 276 Ratio: {num: -1, value: 1.0, maxValue: 1.0} Depth: 5

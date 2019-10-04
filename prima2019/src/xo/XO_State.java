@@ -127,4 +127,10 @@ public class XO_State extends State {
 
 	}
 
+	@Override
+	protected Value getValueX() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

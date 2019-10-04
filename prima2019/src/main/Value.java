@@ -3,8 +3,8 @@ package main;
 public abstract class Value {
 	public static int modelNumber = 1;
 
-	protected int num;
-	protected double value;
+	public int num;
+	public double value;
 	protected double bestValue;
 	protected boolean mark[];
 
@@ -44,14 +44,7 @@ public abstract class Value {
 //		return new Value(-1, 0);
 //	}
 
-	public int compareTo_UCT(Value vv, int total_number) {
-		double u1 = value + Math.sqrt(2 * Math.log(total_number) / num);
-		double u2 = vv.value + Math.sqrt(2 * Math.log(total_number) / vv.num);
-		if (u1 < u2)
-			return -1;
-		else
-			return 1;
-	}
+	public abstract int compareTo_UCT(Value vv, int total_number) ;
 
 	// TODO bug in value cast to double make it negative
 	public abstract Value update(State state, Value simulationResult);

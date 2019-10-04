@@ -93,4 +93,10 @@ public class SPF_Value extends Value {
 	public String toString() {
 		return "{num: " + num + ", value: " + value + ", maxValue: " + bestValue + "}";
 	}
+
+	@Override
+	public int compareTo_UCT(Value vv, int total_number) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

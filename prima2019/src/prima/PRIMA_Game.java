@@ -15,7 +15,7 @@ public class PRIMA_Game extends Game {
 		PrimaMain.timer = new long[ms.playerNumber + 1];
 		for (int i = 1; i <= ms.playerNumber; ++i)
 			PrimaMain.timer[i] = 0;
-		// Game.endTime = 22;
+		//Game.endTime = 10;
 		agentState = new State[ms.playerNumber + 1];
 		agentState[1] = myState;
 		for (int i = 2; i <= ms.playerNumber; ++i) {
